@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Mainframe.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ProjectApotek&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">projectapotek.Frame</a> &gt; <span class="el_source">Mainframe.java</span></div><h1>Mainframe.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package projectapotek.Frame;
+
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableColumnModel;
+import net.proteanit.sql.DbUtils;
+import projectapotek.Controller.MainController;
+import projectapotek.Helper.Helper;
+import projectapotek.Model.MainModel;
+
+/**
+ *
+ * @author nicol
+ */
+public class Mainframe extends javax.swing.JFrame {
+
+<span class="fc" id="L22">    MainModel model = new MainModel();</span>
+<span class="fc" id="L23">    MainController controller = new MainController();</span>
+    
+<span class="fc" id="L25">    Helper helper = new Helper();</span>
+    String product_id;
+    ResultSet rs;
+
+     public void Clear(){
+<span class="fc" id="L30">        tf_name.setText(&quot;&quot;);</span>
+<span class="fc" id="L31">        tf_address.setText(&quot;&quot;);</span>
+<span class="fc" id="L32">        tf_totalq.setText(&quot;&quot;);</span>
+<span class="fc" id="L33">        tf_totalp.setText(&quot;&quot;);</span>
+<span class="fc" id="L34">    }</span>
+    
+     private void search (String type, String query){ //untuk search
+         try {
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">             if (query.isEmpty()){</span>
+<span class="nc" id="L39">                 this.rs = controller.get();</span>
+             }
+<span class="pc bpc" id="L41" title="1 of 4 branches missed.">             else if (type.equals(&quot;id&quot;) &amp;&amp; !query.isEmpty()){</span>
+<span class="fc" id="L42">                 this.rs = controller.showById(query);</span>
+             }
+<span class="pc bpc" id="L44" title="2 of 4 branches missed.">             else if (type.equals(&quot;name&quot;) &amp;&amp; !query.isEmpty()){</span>
+<span class="fc" id="L45">                 this.rs = controller.showByName(query);</span>
+             }
+             
+<span class="fc" id="L48">             loadTable(this.rs);</span>
+<span class="nc" id="L49">         } catch (Exception e) {</span>
+<span class="nc" id="L50">             System.out.println(e.getMessage());</span>
+<span class="fc" id="L51">         }</span>
+<span class="fc" id="L52">     }</span>
+    /**ble(this.rs
+     * Creates new form Mainframe
+     */
+<span class="fc" id="L56">    public Mainframe() {</span>
+<span class="fc" id="L57">        initComponents();</span>
+<span class="fc" id="L58">        getAllData();</span>
+<span class="fc" id="L59">        Clear();</span>
+<span class="fc" id="L60">        tf_idobat.setEditable(false);</span>
+<span class="fc" id="L61">        tf_price.setEditable(false);</span>
+<span class="fc" id="L62">        tf_totalp.setEditable(false);</span>
+<span class="fc" id="L63">        tf_productname.setEditable(false);</span>
+
+<span class="fc" id="L65">    }</span>
+    
+    public void getAllData(){
+<span class="fc" id="L68">        this.rs = controller.get();</span>
+<span class="fc" id="L69">        loadTable(this.rs);</span>
+<span class="fc" id="L70">    }</span>
+    
+    public void loadTable(ResultSet rs){
+<span class="fc" id="L73">        tb_product1.setModel(DbUtils.resultSetToTableModel(rs));</span>
+        
+<span class="fc" id="L75">        TableColumnModel tcm = tb_product1.getColumnModel();</span>
+<span class="fc" id="L76">        tcm.getColumn(0).setHeaderValue(&quot;Product ID&quot;);</span>
+<span class="fc" id="L77">        tcm.getColumn(1).setHeaderValue(&quot;Name&quot;);</span>
+<span class="fc" id="L78">        tcm.getColumn(2).setHeaderValue(&quot;Type&quot;);</span>
+<span class="fc" id="L79">        tcm.getColumn(3).setHeaderValue(&quot;Stock&quot;);</span>
+<span class="fc" id="L80">        tcm.getColumn(4).setHeaderValue(&quot;Price&quot;);</span>
+<span class="fc" id="L81">        tcm.getColumn(5).setHeaderValue(&quot;Expired_Date&quot;);</span>
+<span class="fc" id="L82">    }</span>
+    
+
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+<span class="fc" id="L95">        jLabel3 = new javax.swing.JLabel();</span>
+<span class="fc" id="L96">        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();</span>
+<span class="fc" id="L97">        jLabel6 = new javax.swing.JLabel();</span>
+<span class="fc" id="L98">        jLabel11 = new javax.swing.JLabel();</span>
+<span class="fc" id="L99">        jLabel12 = new javax.swing.JLabel();</span>
+<span class="fc" id="L100">        jLabel15 = new javax.swing.JLabel();</span>
+<span class="fc" id="L101">        jLabel16 = new javax.swing.JLabel();</span>
+<span class="fc" id="L102">        jLabel1 = new javax.swing.JLabel();</span>
+<span class="fc" id="L103">        jLabel2 = new javax.swing.JLabel();</span>
+<span class="fc" id="L104">        jScrollPane1 = new javax.swing.JScrollPane();</span>
+<span class="fc" id="L105">        tb_product1 = new javax.swing.JTable();</span>
+<span class="fc" id="L106">        jLabel4 = new javax.swing.JLabel();</span>
+<span class="fc" id="L107">        jLabel5 = new javax.swing.JLabel();</span>
+<span class="fc" id="L108">        jLabel7 = new javax.swing.JLabel();</span>
+<span class="fc" id="L109">        jLabel8 = new javax.swing.JLabel();</span>
+<span class="fc" id="L110">        tf_address = new javax.swing.JTextField();</span>
+<span class="fc" id="L111">        tf_name = new javax.swing.JTextField();</span>
+<span class="fc" id="L112">        tf_totalp = new javax.swing.JTextField();</span>
+<span class="fc" id="L113">        btn_submit = new javax.swing.JButton();</span>
+<span class="fc" id="L114">        btn_reset = new javax.swing.JButton();</span>
+<span class="fc" id="L115">        tf_search = new javax.swing.JTextField();</span>
+<span class="fc" id="L116">        jLabel9 = new javax.swing.JLabel();</span>
+<span class="fc" id="L117">        btn_searchName = new javax.swing.JButton();</span>
+<span class="fc" id="L118">        btn_searchID = new javax.swing.JButton();</span>
+<span class="fc" id="L119">        tf_totalq = new javax.swing.JTextField();</span>
+<span class="fc" id="L120">        jLabel10 = new javax.swing.JLabel();</span>
+<span class="fc" id="L121">        tf_productname = new javax.swing.JTextField();</span>
+<span class="fc" id="L122">        jLabel13 = new javax.swing.JLabel();</span>
+<span class="fc" id="L123">        label_price = new javax.swing.JLabel();</span>
+<span class="fc" id="L124">        jLabel14 = new javax.swing.JLabel();</span>
+<span class="fc" id="L125">        tf_price = new javax.swing.JTextField();</span>
+<span class="fc" id="L126">        jLabel17 = new javax.swing.JLabel();</span>
+<span class="fc" id="L127">        tf_idobat = new javax.swing.JTextField();</span>
+<span class="fc" id="L128">        jButton1 = new javax.swing.JButton();</span>
+
+<span class="fc" id="L130">        jLabel3.setFont(new java.awt.Font(&quot;Dialog&quot;, 0, 14)); // NOI18N</span>
+<span class="fc" id="L131">        jLabel3.setText(&quot;Pencarian&quot;);</span>
+
+<span class="fc" id="L133">        jCheckBoxMenuItem1.setSelected(true);</span>
+<span class="fc" id="L134">        jCheckBoxMenuItem1.setText(&quot;jCheckBoxMenuItem1&quot;);</span>
+
+<span class="fc" id="L136">        jLabel6.setText(&quot;jLabel6&quot;);</span>
+
+<span class="fc" id="L138">        jLabel11.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 0, 12)); // NOI18N</span>
+<span class="fc" id="L139">        jLabel11.setText(&quot;Jumlah&quot;);</span>
+
+<span class="fc" id="L141">        jLabel12.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 0, 12)); // NOI18N</span>
+<span class="fc" id="L142">        jLabel12.setText(&quot;Jumlah&quot;);</span>
+
+<span class="fc" id="L144">        jLabel15.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 0, 12)); // NOI18N</span>
+<span class="fc" id="L145">        jLabel15.setText(&quot;Nama obat&quot;);</span>
+
+<span class="fc" id="L147">        jLabel16.setText(&quot;jLabel16&quot;);</span>
+
+<span class="fc" id="L149">        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);</span>
+<span class="fc" id="L150">        addMouseListener(new java.awt.event.MouseAdapter() {</span>
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+<span class="nc" id="L152">                formMouseClicked(evt);</span>
+<span class="nc" id="L153">            }</span>
+        });
+
+<span class="fc" id="L156">        jLabel1.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 1, 18)); // NOI18N</span>
+<span class="fc" id="L157">        jLabel1.setText(&quot;APOTEK SEHAT BERSAMA&quot;);</span>
+
+<span class="fc" id="L159">        jLabel2.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 1, 14)); // NOI18N</span>
+<span class="fc" id="L160">        jLabel2.setText(&quot;PILIH PRODUK&quot;);</span>
+
+<span class="fc" id="L162">        tb_product1.setModel(new javax.swing.table.DefaultTableModel(</span>
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                &quot;Title 1&quot;, &quot;Title 2&quot;, &quot;Title 3&quot;, &quot;Title 4&quot;
+            }
+        ));
+<span class="fc" id="L173">        tb_product1.addMouseListener(new java.awt.event.MouseAdapter() {</span>
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+<span class="fc" id="L175">                tb_product1MouseClicked(evt);</span>
+<span class="fc" id="L176">            }</span>
+        });
+<span class="fc" id="L178">        jScrollPane1.setViewportView(tb_product1);</span>
+
+<span class="fc" id="L180">        jLabel4.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 0, 12)); // NOI18N</span>
+<span class="fc" id="L181">        jLabel4.setText(&quot;Nama Pembeli &quot;);</span>
+
+<span class="fc" id="L183">        jLabel5.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 0, 12)); // NOI18N</span>
+<span class="fc" id="L184">        jLabel5.setText(&quot;Jumlah&quot;);</span>
+
+<span class="fc" id="L186">        jLabel7.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 0, 12)); // NOI18N</span>
+<span class="fc" id="L187">        jLabel7.setText(&quot;Total Harga&quot;);</span>
+
+<span class="fc" id="L189">        jLabel8.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 0, 12)); // NOI18N</span>
+<span class="fc" id="L190">        jLabel8.setText(&quot;Alamat&quot;);</span>
+
+<span class="fc" id="L192">        tf_address.setHorizontalAlignment(javax.swing.JTextField.LEFT);</span>
+
+<span class="fc" id="L194">        tf_name.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L196">                tf_nameActionPerformed(evt);</span>
+<span class="nc" id="L197">            }</span>
+        });
+
+<span class="fc" id="L200">        tf_totalp.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L202">                tf_totalpActionPerformed(evt);</span>
+<span class="nc" id="L203">            }</span>
+        });
+
+<span class="fc" id="L206">        btn_submit.setText(&quot;SUBMIT&quot;);</span>
+<span class="fc" id="L207">        btn_submit.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="fc" id="L209">                btn_submitActionPerformed(evt);</span>
+<span class="fc" id="L210">            }</span>
+        });
+
+<span class="fc" id="L213">        btn_reset.setText(&quot;RESET&quot;);</span>
+<span class="fc" id="L214">        btn_reset.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="fc" id="L216">                btn_resetActionPerformed(evt);</span>
+<span class="fc" id="L217">            }</span>
+        });
+
+<span class="fc" id="L220">        tf_search.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L222">                tf_searchActionPerformed(evt);</span>
+<span class="nc" id="L223">            }</span>
+        });
+
+<span class="fc" id="L226">        jLabel9.setFont(new java.awt.Font(&quot;Dialog&quot;, 0, 14)); // NOI18N</span>
+<span class="fc" id="L227">        jLabel9.setText(&quot;Pencarian&quot;);</span>
+
+<span class="fc" id="L229">        btn_searchName.setText(&quot;Cari Dengan Nama&quot;);</span>
+<span class="fc" id="L230">        btn_searchName.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="fc" id="L232">                btn_searchNameActionPerformed(evt);</span>
+<span class="fc" id="L233">            }</span>
+        });
+
+<span class="fc" id="L236">        btn_searchID.setText(&quot;Cari Dengan ID&quot;);</span>
+<span class="fc" id="L237">        btn_searchID.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="fc" id="L239">                btn_searchIDActionPerformed(evt);</span>
+<span class="fc" id="L240">            }</span>
+        });
+
+<span class="fc" id="L243">        tf_totalq.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {</span>
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+<span class="fc" id="L245">                tf_totalqMouseMoved(evt);</span>
+<span class="fc" id="L246">            }</span>
+        });
+<span class="fc" id="L248">        tf_totalq.addInputMethodListener(new java.awt.event.InputMethodListener() {</span>
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+<span class="nc" id="L250">            }</span>
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+<span class="nc" id="L252">                tf_totalqInputMethodTextChanged(evt);</span>
+<span class="nc" id="L253">            }</span>
+        });
+<span class="fc" id="L255">        tf_totalq.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L257">                tf_totalqActionPerformed(evt);</span>
+<span class="nc" id="L258">            }</span>
+        });
+<span class="fc" id="L260">        tf_totalq.addPropertyChangeListener(new java.beans.PropertyChangeListener() {</span>
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+<span class="fc" id="L262">                tf_totalqPropertyChange(evt);</span>
+<span class="fc" id="L263">            }</span>
+        });
+<span class="fc" id="L265">        tf_totalq.addKeyListener(new java.awt.event.KeyAdapter() {</span>
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+<span class="fc" id="L267">                tf_totalqKeyReleased(evt);</span>
+<span class="fc" id="L268">            }</span>
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+<span class="fc" id="L270">                tf_totalqKeyTyped(evt);</span>
+<span class="fc" id="L271">            }</span>
+        });
+
+<span class="fc" id="L274">        jLabel10.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 0, 12)); // NOI18N</span>
+<span class="fc" id="L275">        jLabel10.setText(&quot;Nama obat&quot;);</span>
+
+<span class="fc" id="L277">        jLabel13.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 0, 12)); // NOI18N</span>
+<span class="fc" id="L278">        jLabel13.setText(&quot;Harga&quot;);</span>
+
+<span class="fc" id="L280">        jLabel14.setText(&quot;Rp.&quot;);</span>
+
+<span class="fc" id="L282">        tf_price.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L284">                tf_priceActionPerformed(evt);</span>
+<span class="nc" id="L285">            }</span>
+        });
+
+<span class="fc" id="L288">        jLabel17.setFont(new java.awt.Font(&quot;Sitka Small&quot;, 0, 12)); // NOI18N</span>
+<span class="fc" id="L289">        jLabel17.setText(&quot;Id Obat&quot;);</span>
+
+<span class="fc" id="L291">        tf_idobat.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L293">                tf_idobatActionPerformed(evt);</span>
+<span class="nc" id="L294">            }</span>
+        });
+
+<span class="fc" id="L297">        jButton1.setText(&quot;Back&quot;);</span>
+<span class="fc" id="L298">        jButton1.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="fc" id="L300">                jButton1ActionPerformed(evt);</span>
+<span class="fc" id="L301">            }</span>
+        });
+
+<span class="fc" id="L304">        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</span>
+<span class="fc" id="L305">        getContentPane().setLayout(layout);</span>
+<span class="fc" id="L306">        layout.setHorizontalGroup(</span>
+<span class="fc" id="L307">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L308">            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()</span>
+<span class="fc" id="L309">                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="fc" id="L310">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L311">                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()</span>
+<span class="fc" id="L312">                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)</span>
+<span class="fc" id="L313">                            .addComponent(jLabel1)</span>
+<span class="fc" id="L314">                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING))</span>
+<span class="fc" id="L315">                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L316">                            .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L317">                                .addGap(106, 106, 106)</span>
+<span class="fc" id="L318">                                .addComponent(tf_search, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L319">                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="fc" id="L320">                                .addComponent(btn_searchName, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L321">                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)</span>
+<span class="fc" id="L322">                                .addComponent(btn_searchID, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L323">                            .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L324">                                .addGap(135, 135, 135)</span>
+<span class="fc" id="L325">                                .addComponent(jLabel9)))</span>
+<span class="fc" id="L326">                        .addGap(67, 67, 67))</span>
+<span class="fc" id="L327">                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()</span>
+<span class="fc" id="L328">                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L329">                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()</span>
+<span class="fc" id="L330">                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)</span>
+<span class="fc" id="L331">                                    .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L332">                                        .addComponent(jLabel14)</span>
+<span class="fc" id="L333">                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)</span>
+<span class="fc" id="L334">                                        .addComponent(tf_price, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L335">                                    .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L336">                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L337">                                            .addComponent(jLabel5)</span>
+<span class="fc" id="L338">                                            .addComponent(jLabel7))</span>
+<span class="fc" id="L339">                                        .addGap(34, 34, 34)</span>
+<span class="fc" id="L340">                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L341">                                            .addComponent(tf_totalq, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L342">                                            .addComponent(tf_totalp, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))</span>
+<span class="fc" id="L343">                                .addGap(20, 20, 20))</span>
+<span class="fc" id="L344">                            .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L345">                                .addGap(2, 2, 2)</span>
+<span class="fc" id="L346">                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L347">                                    .addComponent(jLabel10)</span>
+<span class="fc" id="L348">                                    .addComponent(jLabel13)</span>
+<span class="fc" id="L349">                                    .addComponent(jLabel17))</span>
+<span class="fc" id="L350">                                .addGap(41, 41, 41)</span>
+<span class="fc" id="L351">                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L352">                                    .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L353">                                        .addComponent(btn_submit)</span>
+<span class="fc" id="L354">                                        .addGap(27, 27, 27)</span>
+<span class="fc" id="L355">                                        .addComponent(btn_reset))</span>
+<span class="fc" id="L356">                                    .addComponent(tf_productname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L357">                                    .addComponent(tf_idobat, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L358">                                .addGap(18, 18, 18)))</span>
+<span class="fc" id="L359">                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L360">                        .addContainerGap())))</span>
+<span class="fc" id="L361">            .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L362">                .addGap(31, 31, 31)</span>
+<span class="fc" id="L363">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L364">                    .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L365">                        .addComponent(jLabel8)</span>
+<span class="fc" id="L366">                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L367">                            .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L368">                                .addGap(64, 64, 64)</span>
+<span class="fc" id="L369">                                .addComponent(tf_address, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L370">                            .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L371">                                .addGap(62, 62, 62)</span>
+<span class="fc" id="L372">                                .addComponent(label_price))))</span>
+<span class="fc" id="L373">                    .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L374">                        .addComponent(jLabel4)</span>
+<span class="fc" id="L375">                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)</span>
+<span class="fc" id="L376">                        .addComponent(tf_name, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))</span>
+<span class="fc" id="L377">                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="fc" id="L378">                .addComponent(jLabel2)</span>
+<span class="fc" id="L379">                .addGap(193, 193, 193))</span>
+        );
+<span class="fc" id="L381">        layout.setVerticalGroup(</span>
+<span class="fc" id="L382">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L383">            .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L384">                .addGap(6, 6, 6)</span>
+<span class="fc" id="L385">                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L386">                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="fc" id="L387">                .addComponent(jLabel1)</span>
+<span class="fc" id="L388">                .addGap(16, 16, 16)</span>
+<span class="fc" id="L389">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="fc" id="L390">                    .addComponent(jLabel4)</span>
+<span class="fc" id="L391">                    .addComponent(tf_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L392">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L393">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L394">                    .addComponent(jLabel8)</span>
+<span class="fc" id="L395">                    .addComponent(tf_address, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L396">                .addGap(12, 12, 12)</span>
+<span class="fc" id="L397">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="fc" id="L398">                    .addComponent(jLabel17)</span>
+<span class="fc" id="L399">                    .addComponent(tf_idobat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L400">                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="fc" id="L401">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="fc" id="L402">                    .addComponent(tf_productname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L403">                    .addComponent(jLabel10))</span>
+<span class="fc" id="L404">                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)</span>
+<span class="fc" id="L405">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="fc" id="L406">                    .addComponent(jLabel13)</span>
+<span class="fc" id="L407">                    .addComponent(jLabel14)</span>
+<span class="fc" id="L408">                    .addComponent(tf_price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L409">                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="fc" id="L410">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L411">                    .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L412">                        .addComponent(jLabel5)</span>
+<span class="fc" id="L413">                        .addGap(21, 21, 21))</span>
+<span class="fc" id="L414">                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()</span>
+<span class="fc" id="L415">                        .addComponent(tf_totalq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L416">                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))</span>
+<span class="fc" id="L417">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="fc" id="L418">                    .addComponent(jLabel7)</span>
+<span class="fc" id="L419">                    .addComponent(tf_totalp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L420">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L421">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)</span>
+<span class="fc" id="L422">                    .addComponent(btn_submit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="fc" id="L423">                    .addComponent(btn_reset, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L424">                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</span>
+<span class="fc" id="L425">                .addComponent(label_price)</span>
+<span class="fc" id="L426">                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))</span>
+<span class="fc" id="L427">            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()</span>
+<span class="fc" id="L428">                .addGap(19, 19, 19)</span>
+<span class="fc" id="L429">                .addComponent(jLabel9)</span>
+<span class="fc" id="L430">                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)</span>
+<span class="fc" id="L431">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="fc" id="L432">                    .addComponent(tf_search, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L433">                    .addComponent(btn_searchName)</span>
+<span class="fc" id="L434">                    .addComponent(btn_searchID))</span>
+<span class="fc" id="L435">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L436">                .addComponent(jLabel2)</span>
+<span class="fc" id="L437">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L438">                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L439">                .addGap(0, 19, Short.MAX_VALUE))</span>
+        );
+
+<span class="fc" id="L442">        pack();</span>
+<span class="fc" id="L443">    }// &lt;/editor-fold&gt;//GEN-END:initComponents</span>
+
+    private void btn_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_submitActionPerformed
+        // TODO add your handling code here:                                      //SUBMIT BUTTON
+        try {            
+<span class="fc" id="L448">        String name = tf_name.getText();</span>
+<span class="fc" id="L449">        String address = tf_address.getText();</span>
+<span class="fc" id="L450">        String id_obat = tf_idobat.getText();</span>
+<span class="fc" id="L451">        String product_name = tf_productname.getText();</span>
+<span class="fc" id="L452">        String totalq = tf_totalq.getText();</span>
+<span class="fc" id="L453">        String totalp = tf_totalp.getText();</span>
+        
+<span class="fc" id="L455">        model.setName(name);</span>
+<span class="fc" id="L456">        model.setAddress(address);</span>
+<span class="fc" id="L457">        model.setId_obat(id_obat);</span>
+<span class="fc" id="L458">        model.setProduct_Name(product_name);</span>
+<span class="fc" id="L459">        model.setTotalq(totalq);</span>
+<span class="fc" id="L460">        model.setTotalp(totalp);</span>
+        
+<span class="fc" id="L462">        boolean result = controller.submit(model); </span>
+<span class="pc bpc" id="L463" title="1 of 2 branches missed.">         if(result){</span>
+<span class="fc" id="L464">            JOptionPane.showMessageDialog(null,&quot;Pesanan&quot; + product_name + &quot;atas nama&quot;</span>
+            + name +&quot;dengan total harga&quot; + totalp + &quot;akan di kirimkan ke&quot; + address
+            + &quot;, Terimakasih sudah menggunakan layanan aplikasi kami!&quot;);
+        }
+        else{
+<span class="nc" id="L469">            JOptionPane.showMessageDialog(null, &quot;Gagal Menlakukan transaksi&quot;);</span>
+        }
+<span class="fc" id="L471">        Clear();</span>
+<span class="fc" id="L472">        getAllData();</span>
+<span class="nc" id="L473">        } catch (Exception ex) {</span>
+<span class="nc" id="L474">            System.err.println(ex.getMessage());</span>
+<span class="fc" id="L475">        }</span>
+<span class="fc" id="L476">    }//GEN-LAST:event_btn_submitActionPerformed</span>
+
+    private void tf_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_searchActionPerformed
+        // TODO add your handling code here: //SEARCH
+<span class="nc" id="L480">    }//GEN-LAST:event_tf_searchActionPerformed</span>
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+<span class="nc" id="L484">    }//GEN-LAST:event_formMouseClicked</span>
+
+    private void tb_product1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_product1MouseClicked
+        // TODO add your handling code here:                                   //MENGAMBIL RESULT DARI TABLE
+        try {
+<span class="fc" id="L489">        String id = helper.getValueRows(tb_product1, 0);</span>
+<span class="fc" id="L490">        String product_name = helper.getValueRows(tb_product1, 1);</span>
+<span class="fc" id="L491">        String price = helper.getValueRows(tb_product1, 4);</span>
+   
+
+        
+<span class="fc" id="L495">        this.product_id = id;</span>
+<span class="fc" id="L496">        tf_idobat.setText(id);</span>
+<span class="fc" id="L497">        tf_productname.setText(product_name);</span>
+<span class="fc" id="L498">        tf_price.setText(price);</span>
+<span class="nc" id="L499">        } catch (Exception e) {</span>
+<span class="nc" id="L500">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L501">        }</span>
+<span class="fc" id="L502">    }//GEN-LAST:event_tb_product1MouseClicked</span>
+
+    private void tf_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_nameActionPerformed
+
+<span class="nc" id="L506">    }//GEN-LAST:event_tf_nameActionPerformed</span>
+
+    private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
+        // TODO add your handling code here:
+<span class="fc" id="L510">        tf_name.setText(&quot;&quot;);</span>
+<span class="fc" id="L511">        tf_address.setText(&quot;&quot;);</span>
+<span class="fc" id="L512">        tf_productname.setText(&quot;&quot;);</span>
+<span class="fc" id="L513">        tf_totalq.setText(&quot;&quot;);</span>
+<span class="fc" id="L514">        tf_totalp.setText(&quot;&quot;);</span>
+<span class="fc" id="L515">        tf_idobat.setText(&quot;&quot;);</span>
+<span class="fc" id="L516">        tf_price.setText(&quot;&quot;);</span>
+<span class="fc" id="L517">    }//GEN-LAST:event_btn_resetActionPerformed</span>
+
+    private void btn_searchNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchNameActionPerformed
+        // TODO add your handling code here:
+<span class="fc" id="L521">                search(&quot;name&quot;, tf_search.getText());</span>
+<span class="fc" id="L522">    }//GEN-LAST:event_btn_searchNameActionPerformed</span>
+
+    private void btn_searchIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchIDActionPerformed
+        // TODO add your handling code here:
+<span class="fc" id="L526">                search(&quot;id&quot;, tf_search.getText());</span>
+<span class="fc" id="L527">    }//GEN-LAST:event_btn_searchIDActionPerformed</span>
+
+    private void tf_priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_priceActionPerformed
+        // TODO add your handling code here:
+<span class="nc" id="L531">    }//GEN-LAST:event_tf_priceActionPerformed</span>
+
+    private void tf_totalpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_totalpActionPerformed
+        // TODO add your handling code here:
+<span class="nc" id="L535">    }//GEN-LAST:event_tf_totalpActionPerformed</span>
+
+    private void tf_totalqKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_totalqKeyTyped
+        // TODO add your handling code here:
+<span class="fc" id="L539">    }//GEN-LAST:event_tf_totalqKeyTyped</span>
+
+    private void tf_totalqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_totalqActionPerformed
+        // TODO add your handling code here:
+<span class="nc" id="L543">    }//GEN-LAST:event_tf_totalqActionPerformed</span>
+
+    private void tf_totalqMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_totalqMouseMoved
+        // TODO add your handling code here:
+<span class="fc" id="L547">    }//GEN-LAST:event_tf_totalqMouseMoved</span>
+
+    private void tf_totalqPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tf_totalqPropertyChange
+        // TODO add your handling code here:
+<span class="fc" id="L551">    }//GEN-LAST:event_tf_totalqPropertyChange</span>
+
+    private void tf_totalqInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_tf_totalqInputMethodTextChanged
+        // TODO add your handling code here:
+<span class="nc" id="L555">    }//GEN-LAST:event_tf_totalqInputMethodTextChanged</span>
+
+    private void tf_totalqKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_totalqKeyReleased
+        // TODO add your handling code here:
+<span class="fc" id="L559">        int price = Integer.parseInt(tf_price.getText());</span>
+<span class="fc" id="L560">        int quantity = Integer.parseInt(tf_totalq.getText());</span>
+<span class="fc" id="L561">        int total = quantity * price;</span>
+<span class="fc" id="L562">        String totals = Integer.toString(total);</span>
+        
+<span class="fc" id="L564">        tf_totalp.setText(totals);</span>
+<span class="fc" id="L565">    }//GEN-LAST:event_tf_totalqKeyReleased</span>
+
+    private void tf_idobatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_idobatActionPerformed
+        // TODO add your handling code here:
+<span class="nc" id="L569">    }//GEN-LAST:event_tf_idobatActionPerformed</span>
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+<span class="fc" id="L573">                 Welcomeframe frame = new Welcomeframe();</span>
+<span class="fc" id="L574">                   frame.setVisible(true);</span>
+<span class="fc" id="L575">                   this.dispose();</span>
+<span class="fc" id="L576">    }//GEN-LAST:event_jButton1ActionPerformed</span>
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //&lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot; Look and feel setting code (optional) &quot;&gt;
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+<span class="nc bnc" id="L588" title="All 2 branches missed.">            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {</span>
+<span class="nc bnc" id="L589" title="All 2 branches missed.">                if (&quot;Nimbus&quot;.equals(info.getName())) {</span>
+<span class="nc" id="L590">                    javax.swing.UIManager.setLookAndFeel(info.getClassName());</span>
+<span class="nc" id="L591">                    break;</span>
+                }
+            }
+<span class="nc" id="L594">        } catch (ClassNotFoundException ex) {</span>
+<span class="nc" id="L595">            java.util.logging.Logger.getLogger(Mainframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L596">        } catch (InstantiationException ex) {</span>
+<span class="nc" id="L597">            java.util.logging.Logger.getLogger(Mainframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L598">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L599">            java.util.logging.Logger.getLogger(Mainframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L600">        } catch (javax.swing.UnsupportedLookAndFeelException ex) {</span>
+<span class="nc" id="L601">            java.util.logging.Logger.getLogger(Mainframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L602">        }</span>
+        //&lt;/editor-fold&gt;
+
+        /* Create and display the form */
+<span class="nc" id="L606">        java.awt.EventQueue.invokeLater(new Runnable() {</span>
+            public void run() {
+<span class="nc" id="L608">                new Mainframe().setVisible(true);</span>
+<span class="nc" id="L609">            }</span>
+        });
+<span class="nc" id="L611">    }</span>
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_reset;
+    private javax.swing.JButton btn_searchID;
+    private javax.swing.JButton btn_searchName;
+    private javax.swing.JButton btn_submit;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label_price;
+    private javax.swing.JTable tb_product1;
+    private javax.swing.JTextField tf_address;
+    private javax.swing.JTextField tf_idobat;
+    private javax.swing.JTextField tf_name;
+    private javax.swing.JTextField tf_price;
+    private javax.swing.JTextField tf_productname;
+    private javax.swing.JTextField tf_search;
+    private javax.swing.JTextField tf_totalp;
+    private javax.swing.JTextField tf_totalq;
+    // End of variables declaration//GEN-END:variables
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
